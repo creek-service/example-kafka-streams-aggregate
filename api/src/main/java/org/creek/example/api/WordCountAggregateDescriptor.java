@@ -16,34 +16,25 @@
 
 package org.creek.example.api;
 
+import static org.creek.example.internal.TopicConfigBuilder.withPartitions;
+import static org.creek.example.internal.TopicDescriptors.outputTopic;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import org.creek.api.kafka.metadata.OwnedKafkaTopicOutput;
 import org.creek.api.platform.metadata.AggregateDescriptor;
 import org.creek.api.platform.metadata.ComponentInput;
 import org.creek.api.platform.metadata.ComponentOutput;
 
-// ChangeMe: change the name of this class to match the name of the new aggregate and customize as
-// needed
-public final class ExampleAggregateDescriptor implements AggregateDescriptor {
+public final class WordCountAggregateDescriptor implements AggregateDescriptor {
 
     private static final List<ComponentInput> INPUTS = new ArrayList<>();
     private static final List<ComponentOutput> OUTPUTS = new ArrayList<>();
 
-    /*
-    ChangeMe: replace or remove this example topic descriptor:
-
-    private static final String AGGREGATE_PREFIX = "example.";
-
-    public static final OwnedKafkaTopicOutput<Long, String> OutputTopic =
+    public static final OwnedKafkaTopicOutput<String, Long> WordCountTopic =
             register(
-                    outputTopic(
-                            AGGREGATE_PREFIX + "output",
-                            Long.class,
-                            String.class,
-                            withPartitions(2)));
-    */
+                    outputTopic("twitter.word.count", String.class, long.class, withPartitions(5)));
 
     @Override
     public Collection<ComponentInput> inputs() {
@@ -55,19 +46,8 @@ public final class ExampleAggregateDescriptor implements AggregateDescriptor {
         return List.copyOf(OUTPUTS);
     }
 
-    /*
-    ChangeMe: Uncomment if needed, delete if not.
-    private static <T extends ComponentInput> T register(final T input) {
-        INPUTS.add(input);
-        return input;
-    }
-    */
-
-    /*
-    ChangeMe: Uncomment if needed, delete if not.
     private static <T extends ComponentOutput> T register(final T output) {
         OUTPUTS.add(output);
         return output;
     }
-    */
 }

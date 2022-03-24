@@ -30,7 +30,6 @@ allprojects {
     repositories {
         mavenCentral()
 
-        // ChangeMe: remove this, as it's only required by Creek's own repos. Your repo should get Creek jars from Maven Central.
         maven {
             url = uri("https://maven.pkg.github.com/creek-service/*")
             credentials {
@@ -144,7 +143,6 @@ subprojects {
         dependsOn("checkstyleMain", "checkstyleTest", "spotbugsMain", "spotbugsTest")
     }
 
-    // ChangeMe: remove / update this.
     publishing {
         repositories {
             maven {
@@ -167,46 +165,6 @@ subprojects {
             }
         }
     }
-}
-
-val coverage = tasks.register<JacocoReport>("coverage") {
-    group = "coverage"
-    description = "Generates an aggregate code coverage report from all subprojects"
-
-    val coverageReportTask = this
-
-    // If a subproject applies the 'jacoco' plugin, add the result it to the report
-    subprojects {
-        val subproject = this
-        subproject.plugins.withType<JacocoPlugin>().configureEach {
-            subproject.tasks.matching({ it.extensions.findByType<JacocoTaskExtension>() != null }).configureEach {
-                sourceSets(subproject.sourceSets.main.get())
-                executionData(files(subproject.tasks.withType<Test>()).filter { it.exists() && it.name.endsWith(".exec") })
-            }
-
-            subproject.tasks.matching({ it.extensions.findByType<JacocoTaskExtension>() != null }).forEach {
-                coverageReportTask.dependsOn(it)
-            }
-        }
-    }
-
-    reports {
-        xml.required.set(true)
-        html.required.set(true)
-    }
-}
-
-coveralls {
-    sourceDirs = subprojects.flatMap{it.sourceSets.main.get().allSource.srcDirs}.map{it.toString()}
-    jacocoReportPath = "$buildDir/reports/jacoco/coverage/coverage.xml"
-}
-
-tasks.coveralls {
-    group = "coverage"
-    description = "Uploads the aggregated coverage report to Coveralls"
-
-    dependsOn(coverage)
-    onlyIf{System.getenv("CI") != null}
 }
 
 defaultTasks("format", "static", "check")
