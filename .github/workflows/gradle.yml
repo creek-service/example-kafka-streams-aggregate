@@ -26,14 +26,4 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
-      run: ./gradlew check coveralls
-    - name: Increment patch number
-      if: github.event_name == 'push'
-      run: |
-        git fetch --tags --unshallow
-        ./gradlew release clean
-    - name: Publish
-      if: github.event_name == 'push'
-      run: ./gradlew publish
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: ./gradlew check

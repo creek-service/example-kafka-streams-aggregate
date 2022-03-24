@@ -17,11 +17,12 @@
 package org.creek.example.service;
 
 
+import org.apache.kafka.streams.Topology;
 import org.creek.api.kafka.streams.extension.KafkaStreamsExtension;
-import org.creek.api.kafka.streams.extension.KafkaStreamsExtensionOptions;
 import org.creek.api.service.context.CreekContext;
 import org.creek.api.service.context.CreekServices;
-import org.creek.example.services.ExampleServiceDescriptor;
+import org.creek.example.service.kafka.streams.TopologyBuilder;
+import org.creek.example.services.TweetSplitterServiceDescriptor;
 
 /** Entry point of the service */
 public final class ServiceMain {
@@ -29,15 +30,10 @@ public final class ServiceMain {
     private ServiceMain() {}
 
     public static void main(final String... args) {
-        final CreekContext ctx =
-                CreekServices.builder(new ExampleServiceDescriptor())
-                        .with(
-                                KafkaStreamsExtensionOptions.builder()
-                                        // Customize the Kafka streams extension...
-                                        .build())
-                        .build();
+        final CreekContext ctx = CreekServices.context(new TweetSplitterServiceDescriptor());
 
-        // ChangeMe: initialize the app...
-        ctx.extension(KafkaStreamsExtension.class);
+        final KafkaStreamsExtension ext = ctx.extension(KafkaStreamsExtension.class);
+        final Topology topology = new TopologyBuilder(ext).build();
+        ext.execute(topology);
     }
 }

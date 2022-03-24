@@ -1,9 +1,10 @@
-rootProject.name = "aggregate-template" // ChangeMe: set the root project name to the name of your repo.
+rootProject.name = "example-kafka-streams-aggregate"
 
 include(
     "ids",
     "api",
     "services",
     "common",
-    "example-service"
+    "tweet-splitter-service",
+    "word-counter-service"
 )
