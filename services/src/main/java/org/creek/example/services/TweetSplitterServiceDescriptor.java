@@ -38,8 +38,9 @@ public class TweetSplitterServiceDescriptor implements ServiceDescriptor {
     public static final KafkaTopicInput<Long, String> TweetTopic =
             register(TweetAggregateDescriptor.TweetTopic.toInput());
 
-    public static final OwnedKafkaTopicOutput<String, Void> WordTopic =
-            register(outputTopic("twitter.word", String.class, Void.class, withPartitions(10)));
+    /** key contains word; value contains source tweet id */
+    public static final OwnedKafkaTopicOutput<String, Long> WordTopic =
+            register(outputTopic("tweet.word", String.class, Long.class, withPartitions(10)));
 
     @Override
     public Collection<ComponentInput> inputs() {

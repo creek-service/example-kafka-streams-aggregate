@@ -1,7 +1,4 @@
-# Aggregate example service
+# Example tweet word count service
 
-Boilerplate code for spinning up a Kafka Streams based service.
-
-## Backwards compatability
-
-Because the jar is not shared outside the repo there is no backwards compatibility concerns.
+Consumes the `tweet.word` topic, which contains records with specific words in the record key, groups by the key and
+calculates daily word counts, which are output to the `tweet.word.count` topic.

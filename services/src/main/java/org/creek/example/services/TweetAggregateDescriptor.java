@@ -40,8 +40,7 @@ public final class TweetAggregateDescriptor implements AggregateDescriptor {
 
     /** A stream of tweet-id to tweet-text. */
     public static final OwnedKafkaTopicOutput<Long, String> TweetTopic =
-            register(
-                    outputTopic("twitter.word.count", long.class, String.class, withPartitions(1)));
+            register(outputTopic("tweet.text", long.class, String.class, withPartitions(1)));
 
     @Override
     public Collection<ComponentInput> inputs() {
