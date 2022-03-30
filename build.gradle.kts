@@ -5,6 +5,7 @@ plugins {
     id("com.github.spotbugs") version "4.7.0"                   // https://mvnrepository.com/artifact/com.github.spotbugs/spotbugs-gradle-plugin
     id("com.diffplug.spotless") version "6.0.0"                 // https://mvnrepository.com/artifact/com.diffplug.spotless/spotless-plugin-gradle
     id("pl.allegro.tech.build.axion-release") version "1.13.5"  // https://mvnrepository.com/artifact/pl.allegro.tech.build.axion-release/pl.allegro.tech.build.axion-release.gradle.plugin?repo=gradle-plugins
+    id("com.github.kt3k.coveralls") version "2.12.0"            // https://plugins.gradle.org/plugin/com.github.kt3k.coveralls
 }
 
 project.version = scmVersion.version
@@ -126,7 +127,7 @@ subprojects {
         }
     }
 
-    tasks.jacocoTestReport {
+    tasks.withType<JacocoReport>().configureEach{
         dependsOn(tasks.test)
     }
 
@@ -164,6 +165,46 @@ subprojects {
             }
         }
     }
+}
+
+val coverage = tasks.register<JacocoReport>("coverage") {
+    group = "coverage"
+    description = "Generates an aggregate code coverage report from all subprojects"
+
+    val coverageReportTask = this
+
+    // If a subproject applies the 'jacoco' plugin, add the result it to the report
+    subprojects {
+        val subproject = this
+        subproject.plugins.withType<JacocoPlugin>().configureEach {
+            subproject.tasks.matching({ it.extensions.findByType<JacocoTaskExtension>() != null }).configureEach {
+                sourceSets(subproject.sourceSets.main.get())
+                executionData(files(subproject.tasks.withType<Test>()).filter { it.exists() && it.name.endsWith(".exec") })
+            }
+
+            subproject.tasks.matching({ it.extensions.findByType<JacocoTaskExtension>() != null }).forEach {
+                coverageReportTask.dependsOn(it)
+            }
+        }
+    }
+
+    reports {
+        xml.required.set(true)
+        html.required.set(true)
+    }
+}
+
+coveralls {
+    sourceDirs = subprojects.flatMap{it.sourceSets.main.get().allSource.srcDirs}.map{it.toString()}
+    jacocoReportPath = "$buildDir/reports/jacoco/coverage/coverage.xml"
+}
+
+tasks.coveralls {
+    group = "coverage"
+    description = "Uploads the aggregated coverage report to Coveralls"
+
+    dependsOn(coverage)
+    onlyIf{System.getenv("CI") != null}
 }
 
 defaultTasks("format", "static", "check")
