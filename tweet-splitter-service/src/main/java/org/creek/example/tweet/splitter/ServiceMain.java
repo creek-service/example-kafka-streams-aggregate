@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-package org.creek.example.service;
+package org.creek.example.tweet.splitter;
 
 
 import org.apache.kafka.streams.Topology;
 import org.creek.api.kafka.streams.extension.KafkaStreamsExtension;
 import org.creek.api.service.context.CreekContext;
 import org.creek.api.service.context.CreekServices;
-import org.creek.example.service.kafka.streams.TopologyBuilder;
 import org.creek.example.services.TweetSplitterServiceDescriptor;
+import org.creek.example.tweet.splitter.kafka.streams.TopologyBuilder;
 
 /** Entry point of the service */
 public final class ServiceMain {

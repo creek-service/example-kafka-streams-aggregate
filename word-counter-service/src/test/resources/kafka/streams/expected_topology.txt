@@ -1,0 +1,12 @@
+Topologies:
+   Sub-topology: 0
+    Source: ingest-tweet.word (topics: [tweet.word])
+      --> count-word
+    Processor: count-word (stores: [count-store])
+      --> to-stream
+      <-- ingest-tweet.word
+    Processor: to-stream (stores: [])
+      --> egress-tweet.word.count
+      <-- count-word
+    Sink: egress-tweet.word.count (topic: tweet.word.count)
+      <-- to-stream

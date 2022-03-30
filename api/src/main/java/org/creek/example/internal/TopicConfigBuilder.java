@@ -28,6 +28,17 @@ import org.creek.api.kafka.metadata.KafkaTopicConfig;
 @SuppressWarnings("unused") // What is unused today may be used tomorrow...
 public final class TopicConfigBuilder {
 
+    /**
+     * The minimum segment size configured on the Kafka cluster.
+     *
+     * <p>Setting the segment size of a key-compacted topic to the minimum has the benefit of
+     * minimising the data in the topic, which minimises restore times for any state stores built
+     * from the topic.
+     *
+     * <p>The trade off is that the Kafka broker needs to handle more files.
+     */
+    public static final int MIN_SEGMENT_SIZE = 50 * 1024 * 1024;
+
     private static final int MAX_PARTITIONS = 10_000;
 
     private final int partitions;

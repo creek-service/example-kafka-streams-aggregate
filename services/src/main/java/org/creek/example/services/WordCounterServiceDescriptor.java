@@ -34,10 +34,10 @@ public class WordCounterServiceDescriptor implements ServiceDescriptor {
     private static final List<ComponentInternal> INTERNALS = new ArrayList<>();
     private static final List<ComponentOutput> OUTPUTS = new ArrayList<>();
 
-    public static final KafkaTopicInput<String, Void> InputTopic =
+    public static final KafkaTopicInput<String, Long> WordTopic =
             register(TweetSplitterServiceDescriptor.WordTopic.toInput());
 
-    public static final OwnedKafkaTopicOutput<String, Long> OutputTopic =
+    public static final OwnedKafkaTopicOutput<String, Long> WordCountTopic =
             register(WordCountAggregateDescriptor.WordCountTopic);
 
     @Override

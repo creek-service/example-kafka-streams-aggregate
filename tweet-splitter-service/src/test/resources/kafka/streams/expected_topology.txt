@@ -1,0 +1,9 @@
+Topologies:
+   Sub-topology: 0
+    Source: ingest-tweet.text (topics: [tweet.text])
+      --> split
+    Processor: split (stores: [])
+      --> egress-tweet.word
+      <-- ingest-tweet.text
+    Sink: egress-tweet.word (topic: tweet.word)
+      <-- split
