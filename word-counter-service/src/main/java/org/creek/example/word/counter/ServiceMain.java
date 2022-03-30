@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-package org.creek.example.service;
+package org.creek.example.word.counter;
 
 
 import org.apache.kafka.streams.Topology;
 import org.creek.api.kafka.streams.extension.KafkaStreamsExtension;
 import org.creek.api.service.context.CreekContext;
 import org.creek.api.service.context.CreekServices;
-import org.creek.example.service.kafka.streams.TopologyBuilder;
-import org.creek.example.services.TweetSplitterServiceDescriptor;
+import org.creek.example.services.WordCounterServiceDescriptor;
+import org.creek.example.word.counter.kafka.streams.TopologyBuilder;
 
 /** Entry point of the service */
 public final class ServiceMain {
@@ -30,7 +30,7 @@ public final class ServiceMain {
     private ServiceMain() {}
 
     public static void main(final String... args) {
-        final CreekContext ctx = CreekServices.context(new TweetSplitterServiceDescriptor());
+        final CreekContext ctx = CreekServices.context(new WordCounterServiceDescriptor());
 
         final KafkaStreamsExtension ext = ctx.extension(KafkaStreamsExtension.class);
         final Topology topology = new TopologyBuilder(ext).build();

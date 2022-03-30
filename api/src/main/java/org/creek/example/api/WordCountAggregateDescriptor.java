@@ -33,8 +33,7 @@ public final class WordCountAggregateDescriptor implements AggregateDescriptor {
     private static final List<ComponentOutput> OUTPUTS = new ArrayList<>();
 
     public static final OwnedKafkaTopicOutput<String, Long> WordCountTopic =
-            register(
-                    outputTopic("twitter.word.count", String.class, long.class, withPartitions(5)));
+            register(outputTopic("tweet.word.count", String.class, long.class, withPartitions(5)));
 
     @Override
     public Collection<ComponentInput> inputs() {
