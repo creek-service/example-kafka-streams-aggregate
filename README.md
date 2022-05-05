@@ -42,10 +42,10 @@ The aggregate has the following standard aggregate modules:
 * `./gradlew static` will run static code analysis, i.e. [Spotbugs][2] and [Checkstyle][3].
 * `./gradlew check` will run all checks and tests.
 
-[1]: api/src/main/java/org/creek/example/api/WordCountAggregateDescriptor.java
-[2]: services/src/main/java/org/creek/example/services/TweetSplitterServiceDescriptor.java
-[3]: services/src/main/java/org/creek/example/services/WordCounterServiceDescriptor.java
-[4]: tweet-splitter-service/src/main/java/org/creek/example/tweet/splitter/kafka/streams/TopologyBuilder.java
-[5]: word-counter-service/src/main/java/org/creek/example/word/counter/kafka/streams/TopologyBuilder.java
-[6]: tweet-splitter-service/src/test/java/org/creek/example/tweet/splitter/kafka/streams/TopologyBuilderTest.java
-[7]: word-counter-service/src/test/java/org/creek/example/word/counter/kafka/streams/TopologyBuilderTest.java
+[1]: api/src/main/java/org/acme/example/api/WordCountAggregateDescriptor.java
+[2]: services/src/main/java/org/acme/example/services/TweetSplitterServiceDescriptor.java
+[3]: services/src/main/java/org/acme/example/services/WordCounterServiceDescriptor.java
+[4]: tweet-splitter-service/src/main/java/org/acme/example/tweet/splitter/kafka/streams/TopologyBuilder.java
+[5]: word-counter-service/src/main/java/org/acme/example/word/counter/kafka/streams/TopologyBuilder.java
+[6]: tweet-splitter-service/src/test/java/org/acme/example/tweet/splitter/kafka/streams/TopologyBuilderTest.java
+[7]: word-counter-service/src/test/java/org/acme/example/word/counter/kafka/streams/TopologyBuilderTest.java
