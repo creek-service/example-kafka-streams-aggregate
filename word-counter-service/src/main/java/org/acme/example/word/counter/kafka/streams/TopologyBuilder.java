@@ -33,7 +33,7 @@ import org.apache.kafka.streams.kstream.Produced;
 import org.apache.kafka.streams.state.Stores;
 import org.creekservice.api.kafka.common.resource.KafkaTopic;
 import org.creekservice.api.kafka.streams.extension.KafkaStreamsExtension;
-import org.creekservice.api.kafka.streams.util.Name;
+import org.creekservice.api.kafka.streams.extension.util.Name;
 
 /** Builds an example topology for grouping by and counting words. */
 public final class TopologyBuilder {
