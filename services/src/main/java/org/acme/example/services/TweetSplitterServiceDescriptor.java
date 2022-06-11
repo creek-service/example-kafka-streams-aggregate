@@ -43,6 +43,11 @@ public final class TweetSplitterServiceDescriptor implements ServiceDescriptor {
             register(outputTopic("tweet.word", String.class, Long.class, withPartitions(10)));
 
     @Override
+    public String dockerImage() {
+        return "acme.co/tweet-splitter-service";
+    }
+
+    @Override
     public Collection<ComponentInput> inputs() {
         return List.copyOf(INPUTS);
     }

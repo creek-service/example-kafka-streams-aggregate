@@ -41,6 +41,11 @@ public final class WordCounterServiceDescriptor implements ServiceDescriptor {
             register(WordCountAggregateDescriptor.WordCountTopic);
 
     @Override
+    public String dockerImage() {
+        return "acme.co/word-counter-service";
+    }
+
+    @Override
     public Collection<ComponentInput> inputs() {
         return List.copyOf(INPUTS);
     }
